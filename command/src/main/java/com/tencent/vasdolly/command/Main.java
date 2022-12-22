@@ -17,6 +17,7 @@
 package com.tencent.vasdolly.command;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -122,9 +123,26 @@ public class Main {
                                     return;
                                 }
                             } else {
-                                if (!outputDir.mkdirs()) {
-                                    System.out.print("\n\nThe output path mkdirs directory fail!");
-                                    return;
+                                if(outputDir.getAbsolutePath().endsWith(".apk")){
+                                    if(!outputDir.getParentFile().exists()){
+                                        outputDir.getParentFile().mkdirs();
+                                        try {
+                                            outputDir.createNewFile();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }else{
+                                        try {
+                                            outputDir.createNewFile();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                }else{
+                                    if (!outputDir.mkdirs()) {
+                                        System.out.print("\n\nThe output path mkdirs directory fail!");
+                                        return;
+                                    }
                                 }
                             }
 
